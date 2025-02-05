@@ -97,7 +97,7 @@ def recognize_plate(img):
         roi = cv2.copyMakeBorder(roi, pad // 2, pad // 2, pad, pad, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         try:
             # print("try:")
-            cv2.imshow(f"try_{x}", roi)
+            # cv2.imshow(f"try_{x}", roi)
             # print("", pytesseract.image_to_data(roi, config='-c tessedit_char_whitelist=0123456789 --psm 10'))
             text = recognize_digit(roi)
             # clean tesseract text by removing any unwanted blank spaces

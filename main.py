@@ -1,6 +1,6 @@
 import argparse
 import cv2
-import plate_reader
+from plate_reader import PlateReader, VideoFeed
 
 
 def main():
@@ -14,22 +14,30 @@ def main():
     ip = args.ip
     filename = args.filename
     mode = args.mode
+    plate_reader = PlateReader()
 
     if filename:
         frame = cv2.imread(filename)
-        plate_reader.dark_magic_function2(frame)
-        plate_reader.display_frame(cv2.imencode('.jpg', frame)[1].tobytes())
+        plate_reader.detect_plates(frame)
+        VideoFeed("").display_frame(cv2.imencode('.jpg', frame)[1].tobytes())
         return
 
     elif mode == "remote":
-        plate_reader.display_video_feed(ip)
+        if not ip:
+            print("ip parameter isn't set")
+            return
+        video_feed = VideoFeed(ip)
+        # video_feed.display_local_video_feed(f"http://{ip}",plate_reader)
+        video_feed.display_video_feed(plate_reader)
         return
     elif mode == "local":
-        if ip and ip.isalnum():
-            pass
-        else:
+        video_feed = VideoFeed("")
+        if not ip or not ip.isalnum():
             ip = 1
-        plate_reader.display_local_video_feed(idx=ip)
+        elif ip.isalnum():
+            ip = int(ip)
+        
+        video_feed.display_local_video_feed(ip, plate_reader)
         return
     else:
         print(f"Unknown config: {args}")
