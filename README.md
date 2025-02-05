@@ -2,6 +2,7 @@
 A quick license plate reader I hacked together in a week.  
 Uses YOLO to detect objects and the license plates of vehicles (a pretrained model I found online), then extracts the digits out of the plate and passes to tesseract.  
 In my experience tessaract wasn't relaible enough, so I would like to train a NN model to recognize the digits in the future.  
+I would add an optimization to convert YOLO into ncnn format. [here](https://docs.ultralytics.com/integrations/ncnn/)
 
 sources:  
 [lisence plate model](https://github.com/Muhammad-Zeerak-Khan/Automatic-License-Plate-Recognition-using-YOLOv8)  
